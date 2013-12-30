@@ -19,3 +19,5 @@ How to use
     % carton exec -- perl bin/fetch_recipes_from_cookpad.pl search_word > recipe.json
 
 ### Web Ver.
+
+- http://recipe4u.herokuapp.com/
