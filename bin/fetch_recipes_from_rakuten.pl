@@ -26,4 +26,6 @@ fetch_recipes_from_rakuten.pl - fetch recipes from rakuten recipe (http://recipe
 
     fetch_recipes_from_rakuten.pl "your_search_keyword" > result.json
 
+    ex.) fetch_recipes_from_rakuten.pl "tomato" > tomato_recipe.json
+
 =cut
