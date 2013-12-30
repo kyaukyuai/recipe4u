@@ -50,12 +50,10 @@ sub _fetch_original_contents {
 sub fetch_recipes {
     my $self    = shift;
     my $origin  = $self->_fetch_original_contents;
-    my $recipes = {
-            recipes => [],
-    };
-    my @titles = ();
-    my @images = ();
-    my @urls   = ();
+    my @recipes = ();
+    my @titles  = ();
+    my @images  = ();
+    my @urls    = ();
 
     # fetch titles
     foreach my $title ($origin->findnodes('//*[@class="cateRankTtl"]/a')) {
@@ -89,10 +87,10 @@ sub fetch_recipes {
                         url   => $urls[$i],
                 }
         };
-        push $recipes->{recipes}, $recipe;
+        push @recipes, $recipe;
     }
 
-    return $recipes;
+    return { recipes => [@recipes] };
 };
 
 1;
