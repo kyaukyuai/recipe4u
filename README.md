@@ -4,3 +4,9 @@
 ### It is compatible with following services.
 * Rakuten
 * Cookpad
+
+## How to use
+` % cpanm Carton
+  % carton
+  % carton exec -- perl bin/fetch_recipes_from_rakuten.pl search_word > recipe.json
+  % carton exec -- perl bin/fetch_recipes_from_cookpad.pl search_word > recipe.json`
