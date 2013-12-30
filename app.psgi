@@ -10,8 +10,8 @@ use HTML::TreeBuilder::XPath;
 use Encode qw( encode decode );
 use Data::Dumper;
 
-use FetchRecipesFromRakuten;
-use FetchRecipesFromCookpad;
+#use FetchRecipesFromRakuten;
+#use FetchRecipesFromCookpad;
 
 get '/' => 'index';
 
