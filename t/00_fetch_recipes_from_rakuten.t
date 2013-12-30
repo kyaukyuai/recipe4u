@@ -5,7 +5,7 @@ use Test::More;
 use Data::Dumper;
 
 use constant {
-    RECIPE_COUNT => 10,
+    RECIPE_COUNT => 30,
     RECIPE_BASIC_URL => 'http://recipe.rakuten.co.jp/search/',
 };
 
@@ -15,6 +15,8 @@ foreach my $test(
     sub {
         # check instance
         my $rakuten = FetchRecipesFromRakuten->new('tomato');
+        can_ok($rakuten, "_fetch_original_contents");
+        can_ok($rakuten, "fetch_recipes");
         ok(defined $rakuten->{keyword});
         ok(defined $rakuten->{search_url});
         is($rakuten->{keyword}, "tomato", "keyword is valid");
@@ -22,12 +24,11 @@ foreach my $test(
 
         # check _fetch_contents
         $rakuten = FetchRecipesFromRakuten->new('tomato');
-        can_ok($rakuten, "_fetch_original_contents");
         unlike($rakuten->_fetch_original_contents, qr/ERROR/);
         like(FetchRecipesFromRakuten->new('')->_fetch_original_contents, qr/ERROR/);
 
         # check fetech_recipes
-        FetchRecipesFromRakuten->new('tomato')->fetch_recipes;
+        ok(defined FetchRecipesFromRakuten->new('tomato')->fetch_recipes);
     }
 ) { $test->(); }
 

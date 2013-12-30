@@ -9,7 +9,6 @@ our $VERSION = '0.01';
 use WWW::Mechanize;
 use HTML::TreeBuilder::XPath;
 use Encode qw( encode decode );
-use JSON::XS;
 use Data::Dumper;
 
 use constant {
@@ -30,8 +29,8 @@ sub new {
 };
 
 sub _fetch_original_contents {
-    my $self         = shift;
-    my $origin_contents;
+    my $self = shift;
+    my $origin;
 
     eval {
         my $mech = WWW::Mechanize->new(
@@ -39,19 +38,14 @@ sub _fetch_original_contents {
             cookie_jar => undef,
         );
         $mech->get($self->{search_url});
-        $origin_contents = HTML::TreeBuilder::XPath->new();
-        $origin_contents->parse(encode('utf-8', $mech->content));
+        $origin = HTML::TreeBuilder::XPath->new();
+        $origin->parse(encode('utf-8', $mech->content));
     };
     if($@) {
         return "_fetch_web_contents ERROR: " . $@;
     }
-    return $origin_contents;
-}
-
-sub _fetch {
-    my $self     = shift;
-    my ($target) = @_;
-}
+    return $origin;
+};
 
 sub fetch_recipes {
     my $self    = shift;
@@ -101,10 +95,23 @@ sub fetch_recipes {
         last if $count eq RECIPE_COUNT;
     }
 
-    return encode_json $recipes;
-}
+    return $recipes;
+};
 
 1;
+
+=pod
+$recipe = { 
+            recipes => [{
+                recipe => {
+                            title => "a",
+                            image => "b",
+                            url   => "c",
+                },
+            
+           }]
+          }
+=cut
 
 =head1 AUTHOR
 
