@@ -12,14 +12,14 @@ use Encode qw( encode decode );
 use Data::Dumper;
 
 use constant {
-    RECIPE_COUNT     => 30,
-    RECIPE_BASIC_URL => 'http://recipe.rakuten.co.jp/search/',
+    RECIPE_SEARCH_URL => 'http://recipe.rakuten.co.jp/search/',
+    RECIPE_BASIC_URL  => 'http://recipe.rakuten.co.jp',
 };
 
 sub new {
     my $class = shift;
     my ($keyword) = @_;
-    my $search_url = RECIPE_BASIC_URL . $keyword;
+    my $search_url = RECIPE_SEARCH_URL . $keyword;
 
     my $self = {
         keyword    => $keyword,
@@ -50,68 +50,52 @@ sub _fetch_original_contents {
 sub fetch_recipes {
     my $self    = shift;
     my $origin  = $self->_fetch_original_contents;
-    my $recipes = [];
-    for (my $i = 0; $i < RECIPE_COUNT; $i++){
-        push $recipes, {title => "", image => "", url => ""}
-    }
-    my $count;
+    my $recipes = {
+            recipes => [],
+    };
+    my @titles = ();
+    my @images = ();
+    my @urls   = ();
 
-    # fetch recipe title
-    $count = 0;
+    # fetch titles
     foreach my $title ($origin->findnodes('//*[@class="cateRankTtl"]/a')) {
-        $recipes->[$count]->{title} = decode('utf-8', $title->as_text);
-        $count ++;
-        last if $count eq RECIPE_COUNT;
+        push @titles, decode('utf-8', $title->as_text);
     }
     foreach my $title ($origin->findnodes('//*[@class="recipeHead clearfix"]/h3/a')) {
-        $recipes->[$count]->{title} = decode('utf-8', $title->as_text);
-        $count ++;
-        last if $count eq RECIPE_COUNT;
+        push @titles, decode('utf-8', $title->as_text);
     }
 
-    # fetch recipe images
-    $count = 0;
+    # fetch images
     foreach my $image ($origin->findnodes('//*[@class="cateRankImage"]/a/img/@src')) {
-        $recipes->[$count]->{image} = decode("utf-8", $image->{_value});
-        $count ++;
-        last if $count eq RECIPE_COUNT;
+        push @images, decode("utf-8", $image->{_value});
     }
     foreach my $image ($origin->findnodes('//*[@class="recipeImg"]/a/img/@src')) {
-        $recipes->[$count]->{image} = decode('utf-8', $image->{_value});
-        $count ++;
-        last if $count eq RECIPE_COUNT;
+        push @images, decode('utf-8', $image->{_value});
     }
 
-    # fetch recipe url 
-    $count = 0;
+    # fetch urls 
     foreach my $url ($origin->findnodes('//*[@class="cateRankImage"]/a/@href')) {
-        $recipes->[$count]->{url} = 'http://recipe.rakuten.co.jp' . $url->{_value};
-        $count ++;
-        last if $count eq RECIPE_COUNT;
+        push @urls, RECIPE_BASIC_URL . $url->{_value};
     }
     foreach my $url ($origin->findnodes('//*[@class="recipeImg"]/a/@href')) {
-        $recipes->[$count]->{url} = 'http://recipe.rakuten.co.jp' . $url->{_value};
-        $count ++;
-        last if $count eq RECIPE_COUNT;
+        push @urls, RECIPE_BASIC_URL . $url->{_value};
+    }
+
+    for (my $i = 0; $i < $#titles; $i++){
+        my $recipe = {
+                recipe => {
+                        title => $titles[$i],
+                        image => $images[$i],
+                        url   => $urls[$i],
+                }
+        };
+        push $recipes->{recipes}, $recipe;
     }
 
     return $recipes;
 };
 
 1;
-
-=pod
-$recipe = { 
-            recipes => [{
-                recipe => {
-                            title => "a",
-                            image => "b",
-                            url   => "c",
-                },
-            
-           }]
-          }
-=cut
 
 =head1 AUTHOR
 
