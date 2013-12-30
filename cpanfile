@@ -3,6 +3,7 @@ requires 'HTML::TreeBuilder::XPath';
 requires 'Encode';
 requires 'FindBin::libs';
 requires 'Project::Libs';
+requires 'JSON';
 requires 'JSON::XS';
 
 # for web app
