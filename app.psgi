@@ -16,19 +16,26 @@ use FetchRecipesFromRakuten;
 use FetchRecipesFromCookpad;
 
 get '/search' => sub {
-        my $self = shift;
+    my $self = shift;
 
-        # get parameters
-        my $service = $self->param('service');
-        my $keyword = $self->param('keyword');
+    # get parameters
+    my $service = $self->param('service');
+    my $keyword = $self->param('keyword');
+    my $recipe;
 
-        my $recipe = new FetchRecipesFromRakuten($keyword)->fetch_recipes;
+    if ($service eq "rakuten") {
+        $recipe = new FetchRecipesFromRakuten($keyword)->fetch_recipes;
+    } elsif ($service eq "cookpad") {
+        $recipe = new FetchRecipesFromCookpad($keyword)->fetch_recipes;
+    } else {
+        $recipe = { Usage => "http://recipe4u.herokuapp.com/search/?service=(rakuten|cookpad)&keyword=search_word" };
+    }
 
-        $self->stash(
-            'result' => JSON->new->ascii->encode($recipe),
-        );
+    $self->stash(
+        'result' => JSON->new->ascii->encode($recipe),
+    );
 
-        $self->render();
+    $self->render();
 
 } => 'search';
 
