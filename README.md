@@ -22,3 +22,9 @@ How to use
 
     http://recipe4u.herokuapp.com/search/?service=(rakuten|cookpad)&keyword=search_word
     ex.) http://recipe4u.herokuapp.com/search/?service=rakuten&keyword=トマト
+
+TODO
+-----
+
+* Refactoring of Module
+* Improve test coverage
