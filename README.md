@@ -20,4 +20,5 @@ How to use
 
 ### Web Ver.
 
-- http://recipe4u.herokuapp.com/
+    http://recipe4u.herokuapp.com/search/?service=(rakuten|cookpad)&keyword=search_word
+    ex.) http://recipe4u.herokuapp.com/search/?service=rakuten&keyword=トマト
