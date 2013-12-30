@@ -3,3 +3,4 @@ local/
 MYMETA.json
 MYMETA.yml
 META.json
+.coveralls.yml
