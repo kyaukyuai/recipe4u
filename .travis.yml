@@ -3,7 +3,7 @@ perl:
     - "5.16"
     - "5.14"
     - "5.19"
-before_install
+before_install:
     - cpanm Module::Install::Repository
     - cpanm Module::Install::ReadmeFromPod
     - cpanm Module::Install::CPANfile
@@ -11,6 +11,6 @@ before_install
 screipt: yes | (perl Makefile.PL && make && cover -test)
 after_success:
     - cover -report coveralls
-notifications
+notifications:
     email:
         - mail@kakuiyuya.com
