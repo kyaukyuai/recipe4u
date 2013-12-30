@@ -12,9 +12,9 @@ use FetchRecipesFromRakuten;
 my $search_word = $ARGV[0]
     or pod2usage(-1);
 
-my $recipe_json = FetchRecipesFromRakuten->new($search_word)->fetch_recipes;
+my $recipe = FetchRecipesFromRakuten->new($search_word)->fetch_recipes;
 
-print encode_json $recipe_json;
+print encode_json $recipe;
 
 __END__
 
