@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Mojoclicious::Lite;
+use Mojolicious::Lite;
 use Project::Libs;
 use Plack::Builder;
 use WWW::Mechanize;
