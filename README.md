@@ -1,11 +1,11 @@
-# It's a recipe search for you.
+# It's a recipe search API.
 
 [![Build Status](https://travis-ci.org/kyaukyuai/recipe4u.png?branch=master)](https://travis-ci.org/kyaukyuai/recipe4u)
 [![Coverage Status](https://coveralls.io/repos/kyaukyuai/recipe4u/badge.png?branch=master)](https://coveralls.io/r/kyaukyuai/recipe4u?branch=master)
 
 ### It is compatible with following services.
 
-* Rakuten
+* Rakuten Recipe
 * Cookpad
 
 How to use
@@ -27,4 +27,4 @@ TODO
 -----
 
 * Refactoring of Module
-* Improve test coverage
+* Improve return json format
