@@ -20,8 +20,8 @@ How to use
 
 ### Web Ver.
 
-    http://recipe4u.herokuapp.com/search/?service=(rakuten|cookpad)&keyword=search_word
-    ex.) http://recipe4u.herokuapp.com/search/?service=rakuten&keyword=トマト
+    http://recipe4u.herokuapp.com/search.json?service=(rakuten|cookpad)&keyword=search_word
+    ex.) http://recipe4u.herokuapp.com/search.json?service=rakuten&keyword=トマト
 
 TODO
 -----

@@ -38,18 +38,11 @@ get '/search' => sub {
 
     $self->render();
 
-} => 'search';
+};
 
 app->start;
 
 __DATA__
 
-@@ search.html.ep
-<html>
-<head>
-<meta http-equiv="Content-Type" content="application/json; charset=UTF-8">
-</head>
-<body>
-<%= $result %>
-</body>
-</html>
+@@ search.json.ep
+<%== $result %>
