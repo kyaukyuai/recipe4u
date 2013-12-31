@@ -1,4 +1,4 @@
-package FetchRecipesFromCookpad;
+package FetchRecipes::FromCookpad;
 
 use warnings;
 use strict;
@@ -9,41 +9,14 @@ our $VERSION = '0.01';
 use WWW::Mechanize;
 use HTML::TreeBuilder::XPath;
 use Encode qw( encode decode );
-use Data::Dumper;
 
-use constant {
-    RECIPE_SEARCH_URL => 'http://cookpad.com/search/',
-};
+use base qw( FetchRecipes );
+use Data::Dumper;
 
 sub new {
     my $class = shift;
-    my ($keyword) = @_;
-    my $search_url = RECIPE_SEARCH_URL . $keyword;
-
-    my $self = {
-        keyword    => $keyword,
-        search_url => $search_url,
-    };
-    return bless $self, $class;
-};
-
-sub _fetch_original_contents {
-    my $self = shift;
-    my $origin;
-
-    eval {
-        my $mech = WWW::Mechanize->new(
-            agent      => "recipe bot 0.01",
-            cookie_jar => undef,
-        );
-        $mech->get($self->{search_url});
-        $origin = HTML::TreeBuilder::XPath->new();
-        $origin->parse(encode('utf-8', $mech->content));
-    };
-    if($@) {
-        return "_fetch_web_contents ERROR: " . $@;
-    }
-    return $origin;
+    my $self = $class->SUPER::new( { service => "cookpad", keyword => shift } );
+    return $self;
 };
 
 sub fetch_recipes {

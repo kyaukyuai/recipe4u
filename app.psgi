@@ -12,8 +12,9 @@ use JSON;
 use JSON::XS;
 use Data::Dumper;
 
-use FetchRecipesFromRakuten;
-use FetchRecipesFromCookpad;
+use FetchRecipes;
+use FetchRecipes::FromRakuten;
+use FetchRecipes::FromCookpad;
 
 get '/search' => sub {
     my $self = shift;
@@ -24,9 +25,9 @@ get '/search' => sub {
     my $recipe;
 
     if ($service eq "rakuten") {
-        $recipe = new FetchRecipesFromRakuten($keyword)->fetch_recipes;
+        $recipe = new FetchRecipes::FromRakuten($keyword)->fetch_recipes;
     } elsif ($service eq "cookpad") {
-        $recipe = new FetchRecipesFromCookpad($keyword)->fetch_recipes;
+        $recipe = new FetchRecipes::FromCookpad($keyword)->fetch_recipes;
     } else {
         $recipe = { Usage => "http://recipe4u.herokuapp.com/search/?service=(rakuten|cookpad)&keyword=search_word" };
     }

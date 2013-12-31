@@ -7,12 +7,13 @@ use JSON::XS;
 use Pod::Usage;
 use FindBin::libs;
 
-use FetchRecipesFromCookpad;
+use FetchRecipes;
+use FetchRecipes::FromCookpad;
 
 my $search_word = $ARGV[0]
     or pod2usage(-1);
 
-my $recipe = FetchRecipesFromCookpad->new($search_word)->fetch_recipes;
+my $recipe = FetchRecipes::FromCookpad->new($search_word)->fetch_recipes;
 
 print encode_json $recipe;
 

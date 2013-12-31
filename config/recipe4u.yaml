@@ -1,0 +1,6 @@
+rakuten:
+    basic_url: 'http://recipe.rakuten.co.jp/'
+    search_url: 'http://recipe.rakuten.co.jp/search/'
+cookpad:
+    basic_url: 'http://cookpad.com/'
+    search_url: 'http://cookpad.com/search/'

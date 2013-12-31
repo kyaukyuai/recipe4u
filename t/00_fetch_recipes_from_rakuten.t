@@ -4,31 +4,22 @@ use strict;
 use Test::More;
 use Data::Dumper;
 
-use constant {
-    RECIPE_SEARCH_URL => 'http://recipe.rakuten.co.jp/search/',
-    RECIPE_BASIC_URL  => 'http://recipe.rakuten.co.jp',
-};
-
-use_ok("FetchRecipesFromRakuten");
+use_ok("FetchRecipes::FromRakuten");
 
 foreach my $test(
     sub {
         # check instance
-        my $rakuten = FetchRecipesFromRakuten->new('tomato');
-        can_ok($rakuten, "_fetch_original_contents");
-        can_ok($rakuten, "fetch_recipes");
-        ok(defined $rakuten->{keyword});
-        ok(defined $rakuten->{search_url});
-        is($rakuten->{keyword}, "tomato", "keyword is valid");
-        is($rakuten->{search_url}, RECIPE_SEARCH_URL . $rakuten->{keyword}, "search url is valid");
-
-        # check _fetch_contents
-        $rakuten = FetchRecipesFromRakuten->new('tomato');
-        unlike($rakuten->_fetch_original_contents, qr/ERROR/);
-        like(FetchRecipesFromRakuten->new('')->_fetch_original_contents, qr/ERROR/);
-
+        my $rakuten_fetcher = FetchRecipes::FromRakuten->new('tomato');
+        is($rakuten_fetcher->{service}, "rakuten", "rakuten ver.: service is valid");
+        is($rakuten_fetcher->{keyword}, "tomato", "rakuten ver.: keyword is valid");
+        is($rakuten_fetcher->{conf}->{basic_url}, "http://recipe.rakuten.co.jp/", "rakuten ver.: basic_url is valid");
+        is($rakuten_fetcher->{conf}->{search_url}, "http://recipe.rakuten.co.jp/search/", "rakuten ver.: search_url is valid");
+        can_ok($rakuten_fetcher, "_fetch_original_contents");
+        unlike(FetchRecipes::FromRakuten->new('tomato')->_fetch_original_contents, qr/ERROR/);
+        like(FetchRecipes::FromRakuten->new()->_fetch_original_contents, qr/ERROR/);
+        can_ok($rakuten_fetcher, "fetch_recipes");
         # check fetech_recipes
-        ok(defined FetchRecipesFromRakuten->new('tomato')->fetch_recipes);
+        ok(defined FetchRecipes::FromRakuten->new('tomato')->fetch_recipes);
     }
 ) { $test->(); }
 

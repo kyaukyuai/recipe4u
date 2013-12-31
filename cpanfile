@@ -5,6 +5,7 @@ requires 'FindBin::libs';
 requires 'Project::Libs';
 requires 'JSON';
 requires 'JSON::XS';
+requires 'YAML';
 
 # for web app
 requires 'Mojolicious::Lite';
