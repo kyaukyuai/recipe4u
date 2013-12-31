@@ -33,7 +33,7 @@ get '/search' => sub {
     }
 
     $self->stash(
-        'result' => JSON->new->encode($recipe),
+        'result' => JSON->new->ascii->encode($recipe),
     );
 
     $self->render();
