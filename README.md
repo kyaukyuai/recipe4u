@@ -23,8 +23,11 @@ How to use
     http://recipe4u.herokuapp.com/search.json?service=(rakuten|cookpad)&keyword=search_word
     ex.) http://recipe4u.herokuapp.com/search.json?service=rakuten&keyword=トマト
 
+    注意)
+    JSONP形式は、入力パラメータにcallbackを指定することで出力されます。
+
 TODO
 -----
 
 * Refactoring of Module
-* Improve return json format
+* Improve return json format & items
