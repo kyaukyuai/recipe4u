@@ -18,7 +18,14 @@ foreach my $test(
         unlike(FetchRecipes::FromCookpad->new('tomato')->_fetch_original_contents, qr/ERROR/);
         can_ok($cookpad_fetcher, "fetch_recipes");
         # check fetech_recipes
-        ok(defined FetchRecipes::FromCookpad->new('tomato')->fetch_recipes);
+        my $recipes = FetchRecipes::FromCookpad->new('tomato')->fetch_recipes;
+        ok(defined $recipes);
+        ok(defined $recipes->{keyword});
+        is($recipes->{keyword}, "tomato");
+        ok(defined $recipes->{recipes});
+        cmp_ok(ref($recipes->{recipes}), 'eq', 'ARRAY');
+        ok(defined $recipes->{hits});
+        like($recipes->{hits}, qr/\d+/);
     }
 ) { $test->(); }
 

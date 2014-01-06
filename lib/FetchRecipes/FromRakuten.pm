@@ -62,7 +62,11 @@ sub fetch_recipes {
         push @recipes, $recipe;
     }
 
-    return { recipes => [@recipes] };
+    return { 
+            keyword => $self->{keyword},
+            hits    => $#titles,
+            recipes => [@recipes],
+    };
 };
 
 1;
